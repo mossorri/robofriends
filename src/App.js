@@ -3,6 +3,7 @@ import CardList from "./Components/CardList";
 // import { robots } from "./robots";
 import SearchBox from "./Components/Searchbox";
 import "./App.css";
+import ErrorBoundry from "./Components/ErrorBoundry";
 
 class App extends Component {
   constructor() {
@@ -23,7 +24,7 @@ class App extends Component {
     this.setState({ searchfield: event.target.value });
   };
   render() {
-    const {robots, searchfield} = this.state;
+    const { robots, searchfield } = this.state;
     const filteredRobots = robots.filter((robot) => {
       return robot.name.toLowerCase().includes(searchfield.toLowerCase());
     });
@@ -34,7 +35,9 @@ class App extends Component {
         <div className="tc">
           <h1 className="f1">RoboFriends</h1>
           <SearchBox searchChange={this.onSearchChange} />
-          <CardList robots={filteredRobots} />
+          <ErrorBoundry>
+            <CardList robots={filteredRobots} />
+          </ErrorBoundry>
         </div>
       );
     }
